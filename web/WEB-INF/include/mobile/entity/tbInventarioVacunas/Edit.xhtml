@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TbInventarioVacunasEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditTbInventarioVacunasTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TbInventarioVacunasListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TbInventarioVacunasEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{tbInventarioVacunasController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditTbInventarioVacunasLabel_idInventarioVacuna}" for="idInventarioVacuna" />
+                            <h:outputText id="idInventarioVacuna" value="#{tbInventarioVacunasController.selected.idInventarioVacuna}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTbInventarioVacunasLabel_fechaCompra}" for="fechaCompra" />
+                            <p:calendar id="fechaCompra" pattern="MM/dd/yyyy" value="#{tbInventarioVacunasController.selected.fechaCompra}" title="#{myBundle.EditTbInventarioVacunasTitle_fechaCompra}"  showOn="button"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTbInventarioVacunasLabel_fechaCaducidad}" for="fechaCaducidad" />
+                            <p:calendar id="fechaCaducidad" pattern="MM/dd/yyyy" value="#{tbInventarioVacunasController.selected.fechaCaducidad}" title="#{myBundle.EditTbInventarioVacunasTitle_fechaCaducidad}"  showOn="button"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTbInventarioVacunasLabel_numeroLote}" for="numeroLote" />
+                            <p:inputText id="numeroLote" value="#{tbInventarioVacunasController.selected.numeroLote}" title="#{myBundle.EditTbInventarioVacunasTitle_numeroLote}" size="30" maxlength="30"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTbInventarioVacunasLabel_precioLote}" for="precioLote" />
+                            <p:inputText id="precioLote" value="#{tbInventarioVacunasController.selected.precioLote}" title="#{myBundle.EditTbInventarioVacunasTitle_precioLote}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTbInventarioVacunasLabel_cantidadLote}" for="cantidadLote" />
+                            <p:inputText id="cantidadLote" value="#{tbInventarioVacunasController.selected.cantidadLote}" title="#{myBundle.EditTbInventarioVacunasTitle_cantidadLote}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTbInventarioVacunasLabel_idTipoVacuna}" for="idTipoVacuna" />
+                            <p:selectOneMenu id="idTipoVacuna" value="#{tbInventarioVacunasController.selected.idTipoVacuna}"  converter="catTipoVacunaConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{catTipoVacunaController.items}"
+                                               var="idTipoVacunaItem"
+                                               itemValue="#{idTipoVacunaItem}"
+                                               itemLabel="#{idTipoVacunaItem.idTipoVacuna.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTbInventarioVacunasLabel_idLaboratorio}" for="idLaboratorio" />
+                            <p:selectOneMenu id="idLaboratorio" value="#{tbInventarioVacunasController.selected.idLaboratorio}"  converter="catLaboratorioConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{catLaboratorioController.items}"
+                                               var="idLaboratorioItem"
+                                               itemValue="#{idLaboratorioItem}"
+                                               itemLabel="#{idLaboratorioItem.idLaboratorio.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{tbInventarioVacunasController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:TbInventarioVacunasListPage:TbInventarioVacunasListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:TbInventarioVacunasListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TbPersonaViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewTbPersonaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TbPersonaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TbPersonaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{tbPersonaController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTbPersonaLabel_cui}"/>
+                            <h:outputText value="#{tbPersonaController.selected.cui}" title="#{myBundle.ViewTbPersonaTitle_cui}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTbPersonaLabel_nombre}"/>
+                            <h:outputText value="#{tbPersonaController.selected.nombre}" title="#{myBundle.ViewTbPersonaTitle_nombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTbPersonaLabel_fechaNacimiento}"/>
+                            <h:outputText value="#{tbPersonaController.selected.fechaNacimiento}" title="#{myBundle.ViewTbPersonaTitle_fechaNacimiento}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTbPersonaLabel_direccion}"/>
+                            <h:outputText value="#{tbPersonaController.selected.direccion}" title="#{myBundle.ViewTbPersonaTitle_direccion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTbPersonaLabel_telefonoMovil}"/>
+                            <h:outputText value="#{tbPersonaController.selected.telefonoMovil}" title="#{myBundle.ViewTbPersonaTitle_telefonoMovil}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTbPersonaLabel_telefonoCasa}"/>
+                            <h:outputText value="#{tbPersonaController.selected.telefonoCasa}" title="#{myBundle.ViewTbPersonaTitle_telefonoCasa}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTbPersonaLabel_nombreEncargado}"/>
+                            <h:outputText value="#{tbPersonaController.selected.nombreEncargado}" title="#{myBundle.ViewTbPersonaTitle_nombreEncargado}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTbPersonaLabel_cuiEncargado}"/>
+                            <h:outputText value="#{tbPersonaController.selected.cuiEncargado}" title="#{myBundle.ViewTbPersonaTitle_cuiEncargado}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CatTipoVacunaListPage">
+        <pm:header title="#{myBundle.ListCatTipoVacunaTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":CatTipoVacunaCreatePage:CatTipoVacunaCreateForm" actionListener="#{catTipoVacunaController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:CatTipoVacunaCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CatTipoVacunaListForm">
+
+                <p:dataList id="datalist"
+                            paginator="true"
+                            rows="10"
+                            rowsPerPageTemplate="10,20,30,40,50"
+                            pt:data-inset="true"
+                            value="#{catTipoVacunaController.items}"
+                            var="item">
+
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCatTipoVacunaTitle}"/>
+                    </f:facet>
+
+                    <p:commandLink update=":CatTipoVacunaEditPage:CatTipoVacunaEditForm" action="pm:CatTipoVacunaEditPage">
+                        <p>
+
+
+
+                            <h:outputText value="#{item.idTipoVacuna}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.nombreVacuna}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.efectosAdversos}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.modoAlmacen}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.cantidadAplicaciones}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.idLaboratorio.idLaboratorio}"/>
+
+
+                        </p>
+                        <f:setPropertyActionListener value="#{item}" target="#{catTipoVacunaController.selected}" />
+                    </p:commandLink>
+
+                    <f:facet name="footer">
+                        <h:outputText value="#{myBundle.ListCatTipoVacunaTitle}"/>
+                    </f:facet>
+
+                </p:dataList>
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

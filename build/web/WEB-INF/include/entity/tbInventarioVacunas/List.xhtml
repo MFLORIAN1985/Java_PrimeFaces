@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TbInventarioVacunasListForm">
+
+        <p:panel header="#{myBundle.ListTbInventarioVacunasTitle}">
+            <p:contextMenu id="TbInventarioVacunasDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('TbInventarioVacunasListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('TbInventarioVacunasListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('TbInventarioVacunasListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('TbInventarioVacunasListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.TbInventarioVacunasMenuItem_idTipoVacuna}" icon="ui-icon-search"  actionListener="#{tbInventarioVacunasController.prepareIdTipoVacuna}" update=":CatTipoVacunaViewForm" oncomplete="PF('CatTipoVacunaViewDialog').show()" disabled="#{empty tbInventarioVacunasController.selected.idTipoVacuna}"/>  
+                <p:menuitem value="#{myBundle.TbInventarioVacunasMenuItem_idLaboratorio}" icon="ui-icon-search"  actionListener="#{tbInventarioVacunasController.prepareIdLaboratorio}" update=":CatLaboratorioViewForm" oncomplete="PF('CatLaboratorioViewDialog').show()" disabled="#{empty tbInventarioVacunasController.selected.idLaboratorio}"/>  
+                <p:menuitem value="#{myBundle.TbInventarioVacunasMenuItem_tbAplicacionDosisCollection}" icon="ui-icon-search"  action="#{tbInventarioVacunasController.navigateTbAplicacionDosisCollection}" disabled="#{tbInventarioVacunasController.isTbAplicacionDosisCollectionEmpty}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{tbInventarioVacunasController.items}"
+                         lazy="false"
+                         rowKey="#{item.idInventarioVacuna}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{tbInventarioVacunasController.selected}"
+                         filteredValue="#{tbInventarioVacunasController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{tbInventarioVacunasController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idInventarioVacuna}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:TbInventarioVacunasDataTableContextMenu" listener="#{tbInventarioVacunasController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:TbInventarioVacunasDataTableContextMenu" listener="#{tbInventarioVacunasController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{tbInventarioVacunasController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('TbInventarioVacunasListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idInventarioVacuna}" filterBy="#{item.idInventarioVacuna}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTbInventarioVacunasTitle_idInventarioVacuna}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idInventarioVacuna}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaCompra}" filterBy="#{item.fechaCompra}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTbInventarioVacunasTitle_fechaCompra}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaCompra}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaCaducidad}" filterBy="#{item.fechaCaducidad}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTbInventarioVacunasTitle_fechaCaducidad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaCaducidad}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.numeroLote}" filterBy="#{item.numeroLote}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTbInventarioVacunasTitle_numeroLote}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numeroLote}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.precioLote}" filterBy="#{item.precioLote}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTbInventarioVacunasTitle_precioLote}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.precioLote}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cantidadLote}" filterBy="#{item.cantidadLote}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTbInventarioVacunasTitle_cantidadLote}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cantidadLote}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idTipoVacuna.idTipoVacuna}" filterBy="#{item.idTipoVacuna.idTipoVacuna}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTbInventarioVacunasTitle_idTipoVacuna}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idTipoVacuna.idTipoVacuna}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idLaboratorio.idLaboratorio}" filterBy="#{item.idLaboratorio.idLaboratorio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTbInventarioVacunasTitle_idLaboratorio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idLaboratorio.idLaboratorio}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{tbInventarioVacunasController.prepareCreate}" update=":TbInventarioVacunasCreateForm" oncomplete="PF('TbInventarioVacunasCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":TbInventarioVacunasViewForm" oncomplete="PF('TbInventarioVacunasViewDialog').show()" disabled="#{empty tbInventarioVacunasController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TbInventarioVacunasEditForm" oncomplete="PF('TbInventarioVacunasEditDialog').show()" disabled="#{empty tbInventarioVacunasController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tbInventarioVacunasController.delete}" update=":growl,datalist" disabled="#{empty tbInventarioVacunasController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

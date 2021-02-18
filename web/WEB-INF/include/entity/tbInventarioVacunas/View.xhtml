@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TbInventarioVacunasViewDlg" widgetVar="TbInventarioVacunasViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewTbInventarioVacunasTitle}" closeOnEscape="true">
+
+            <h:form id="TbInventarioVacunasViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{tbInventarioVacunasController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewTbInventarioVacunasLabel_idInventarioVacuna}"/>
+                        <h:outputText value="#{tbInventarioVacunasController.selected.idInventarioVacuna}" title="#{myBundle.ViewTbInventarioVacunasTitle_idInventarioVacuna}"/>
+
+                        <h:outputText value="#{myBundle.ViewTbInventarioVacunasLabel_fechaCompra}"/>
+                        <h:outputText value="#{tbInventarioVacunasController.selected.fechaCompra}" title="#{myBundle.ViewTbInventarioVacunasTitle_fechaCompra}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewTbInventarioVacunasLabel_fechaCaducidad}"/>
+                        <h:outputText value="#{tbInventarioVacunasController.selected.fechaCaducidad}" title="#{myBundle.ViewTbInventarioVacunasTitle_fechaCaducidad}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewTbInventarioVacunasLabel_numeroLote}"/>
+                        <h:outputText value="#{tbInventarioVacunasController.selected.numeroLote}" title="#{myBundle.ViewTbInventarioVacunasTitle_numeroLote}"/>
+
+                        <h:outputText value="#{myBundle.ViewTbInventarioVacunasLabel_precioLote}"/>
+                        <h:outputText value="#{tbInventarioVacunasController.selected.precioLote}" title="#{myBundle.ViewTbInventarioVacunasTitle_precioLote}"/>
+
+                        <h:outputText value="#{myBundle.ViewTbInventarioVacunasLabel_cantidadLote}"/>
+                        <h:outputText value="#{tbInventarioVacunasController.selected.cantidadLote}" title="#{myBundle.ViewTbInventarioVacunasTitle_cantidadLote}"/>
+
+                        <h:outputText value="#{myBundle.ViewTbInventarioVacunasLabel_idTipoVacuna}"/>
+                        <h:outputText value="#{tbInventarioVacunasController.selected.idTipoVacuna.idTipoVacuna}"/>
+
+                        <h:outputText value="#{myBundle.ViewTbInventarioVacunasLabel_idLaboratorio}"/>
+                        <h:outputText value="#{tbInventarioVacunasController.selected.idLaboratorio.idLaboratorio}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('TbInventarioVacunasViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

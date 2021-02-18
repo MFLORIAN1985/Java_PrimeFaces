@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TbAplicacionDosisEditDlg" widgetVar="TbAplicacionDosisEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditTbAplicacionDosisTitle}" closeOnEscape="true">
+
+            <h:form id="TbAplicacionDosisEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{tbAplicacionDosisController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditTbAplicacionDosisLabel_idAplicacion}" for="idAplicacion" />
+                        <h:outputText id="idAplicacion" value="#{tbAplicacionDosisController.selected.idAplicacion}" />
+
+                        <p:outputLabel value="#{myBundle.EditTbAplicacionDosisLabel_fechaAplicacion}" for="fechaAplicacion" />
+                        <p:calendar id="fechaAplicacion" pattern="MM/dd/yyyy" value="#{tbAplicacionDosisController.selected.fechaAplicacion}" title="#{myBundle.EditTbAplicacionDosisTitle_fechaAplicacion}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditTbAplicacionDosisLabel_cantidadAplicada}" for="cantidadAplicada" />
+                        <p:inputText id="cantidadAplicada" value="#{tbAplicacionDosisController.selected.cantidadAplicada}" title="#{myBundle.EditTbAplicacionDosisTitle_cantidadAplicada}"/>
+
+                        <p:outputLabel value="#{myBundle.EditTbAplicacionDosisLabel_idInventarioVacuna}" for="idInventarioVacuna" />
+                        <p:selectOneMenu id="idInventarioVacuna" value="#{tbAplicacionDosisController.selected.idInventarioVacuna}"  converter="tbInventarioVacunasConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tbInventarioVacunasController.items}"
+                                           var="idInventarioVacunaItem"
+                                           itemValue="#{idInventarioVacunaItem}"
+                                           itemLabel="#{idInventarioVacunaItem.idInventarioVacuna.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditTbAplicacionDosisLabel_cui}" for="cui" />
+                        <p:selectOneMenu id="cui" value="#{tbAplicacionDosisController.selected.cui}"  converter="tbPersonaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tbPersonaController.items}"
+                                           var="cuiItem"
+                                           itemValue="#{cuiItem}"
+                                           itemLabel="#{cuiItem.cui.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tbAplicacionDosisController.save}" value="#{myBundle.Save}" update="display,:TbAplicacionDosisListForm:datalist,:TbAplicacionDosisListForm:TbAplicacionDosisDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TbAplicacionDosisEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TbAplicacionDosisEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

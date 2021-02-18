@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CatLaboratorioListForm">
+
+        <p:panel header="#{myBundle.ListCatLaboratorioTitle}">
+            <p:contextMenu id="CatLaboratorioDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('CatLaboratorioListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('CatLaboratorioListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('CatLaboratorioListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CatLaboratorioListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.CatLaboratorioMenuItem_catTipoVacunaCollection}" icon="ui-icon-search"  action="#{catLaboratorioController.navigateCatTipoVacunaCollection}" disabled="#{catLaboratorioController.isCatTipoVacunaCollectionEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CatLaboratorioMenuItem_idPais}" icon="ui-icon-search"  actionListener="#{catLaboratorioController.prepareIdPais}" update=":CatPaisViewForm" oncomplete="PF('CatPaisViewDialog').show()" disabled="#{empty catLaboratorioController.selected.idPais}"/>  
+                <p:menuitem value="#{myBundle.CatLaboratorioMenuItem_tbInventarioVacunasCollection}" icon="ui-icon-search"  action="#{catLaboratorioController.navigateTbInventarioVacunasCollection}" disabled="#{catLaboratorioController.isTbInventarioVacunasCollectionEmpty}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{catLaboratorioController.items}"
+                         lazy="false"
+                         rowKey="#{item.idLaboratorio}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{catLaboratorioController.selected}"
+                         filteredValue="#{catLaboratorioController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{catLaboratorioController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idLaboratorio}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CatLaboratorioDataTableContextMenu" listener="#{catLaboratorioController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CatLaboratorioDataTableContextMenu" listener="#{catLaboratorioController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{catLaboratorioController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CatLaboratorioListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idLaboratorio}" filterBy="#{item.idLaboratorio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCatLaboratorioTitle_idLaboratorio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idLaboratorio}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombreLaboratorio}" filterBy="#{item.nombreLaboratorio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCatLaboratorioTitle_nombreLaboratorio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombreLaboratorio}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idPais.idPais}" filterBy="#{item.idPais.idPais}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCatLaboratorioTitle_idPais}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idPais.idPais}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{catLaboratorioController.prepareCreate}" update=":CatLaboratorioCreateForm" oncomplete="PF('CatLaboratorioCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":CatLaboratorioViewForm" oncomplete="PF('CatLaboratorioViewDialog').show()" disabled="#{empty catLaboratorioController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CatLaboratorioEditForm" oncomplete="PF('CatLaboratorioEditDialog').show()" disabled="#{empty catLaboratorioController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{catLaboratorioController.delete}" update=":growl,datalist" disabled="#{empty catLaboratorioController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

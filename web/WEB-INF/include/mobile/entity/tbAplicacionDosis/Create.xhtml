@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TbAplicacionDosisCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateTbAplicacionDosisTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TbAplicacionDosisListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TbAplicacionDosisCreateForm">
+
+                <h:panelGroup id="display" rendered="#{tbAplicacionDosisController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateTbAplicacionDosisLabel_idAplicacion}" for="idAplicacion" />
+                            <p:inputText id="idAplicacion" value="#{tbAplicacionDosisController.selected.idAplicacion}" title="#{myBundle.CreateTbAplicacionDosisTitle_idAplicacion}" required="true" requiredMessage="#{myBundle.CreateTbAplicacionDosisRequiredMessage_idAplicacion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateTbAplicacionDosisLabel_fechaAplicacion}" for="fechaAplicacion" />
+                            <p:calendar id="fechaAplicacion" pattern="MM/dd/yyyy" value="#{tbAplicacionDosisController.selected.fechaAplicacion}" title="#{myBundle.CreateTbAplicacionDosisTitle_fechaAplicacion}"  showOn="button"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateTbAplicacionDosisLabel_cantidadAplicada}" for="cantidadAplicada" />
+                            <p:inputText id="cantidadAplicada" value="#{tbAplicacionDosisController.selected.cantidadAplicada}" title="#{myBundle.CreateTbAplicacionDosisTitle_cantidadAplicada}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateTbAplicacionDosisLabel_idInventarioVacuna}" for="idInventarioVacuna" />
+                            <p:selectOneMenu id="idInventarioVacuna" value="#{tbAplicacionDosisController.selected.idInventarioVacuna}"  converter="tbInventarioVacunasConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{tbInventarioVacunasController.items}"
+                                               var="idInventarioVacunaItem"
+                                               itemValue="#{idInventarioVacunaItem}"
+                                               itemLabel="#{idInventarioVacunaItem.idInventarioVacuna.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateTbAplicacionDosisLabel_cui}" for="cui" />
+                            <p:selectOneMenu id="cui" value="#{tbAplicacionDosisController.selected.cui}"  converter="tbPersonaConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{tbPersonaController.items}"
+                                               var="cuiItem"
+                                               itemValue="#{cuiItem}"
+                                               itemLabel="#{cuiItem.cui.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{tbAplicacionDosisController.saveNew}" value="#{myBundle.Save}" update="display,:TbAplicacionDosisListPage:TbAplicacionDosisListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:TbAplicacionDosisListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

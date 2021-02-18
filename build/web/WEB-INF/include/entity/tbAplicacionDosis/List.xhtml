@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TbAplicacionDosisListForm">
+
+        <p:panel header="#{myBundle.ListTbAplicacionDosisTitle}">
+            <p:contextMenu id="TbAplicacionDosisDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('TbAplicacionDosisListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('TbAplicacionDosisListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('TbAplicacionDosisListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('TbAplicacionDosisListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.TbAplicacionDosisMenuItem_idInventarioVacuna}" icon="ui-icon-search"  actionListener="#{tbAplicacionDosisController.prepareIdInventarioVacuna}" update=":TbInventarioVacunasViewForm" oncomplete="PF('TbInventarioVacunasViewDialog').show()" disabled="#{empty tbAplicacionDosisController.selected.idInventarioVacuna}"/>  
+                <p:menuitem value="#{myBundle.TbAplicacionDosisMenuItem_cui}" icon="ui-icon-search"  actionListener="#{tbAplicacionDosisController.prepareCui}" update=":TbPersonaViewForm" oncomplete="PF('TbPersonaViewDialog').show()" disabled="#{empty tbAplicacionDosisController.selected.cui}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{tbAplicacionDosisController.items}"
+                         lazy="false"
+                         rowKey="#{item.idAplicacion}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{tbAplicacionDosisController.selected}"
+                         filteredValue="#{tbAplicacionDosisController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{tbAplicacionDosisController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idAplicacion}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:TbAplicacionDosisDataTableContextMenu" listener="#{tbAplicacionDosisController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:TbAplicacionDosisDataTableContextMenu" listener="#{tbAplicacionDosisController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{tbAplicacionDosisController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('TbAplicacionDosisListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idAplicacion}" filterBy="#{item.idAplicacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTbAplicacionDosisTitle_idAplicacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idAplicacion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaAplicacion}" filterBy="#{item.fechaAplicacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTbAplicacionDosisTitle_fechaAplicacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaAplicacion}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cantidadAplicada}" filterBy="#{item.cantidadAplicada}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTbAplicacionDosisTitle_cantidadAplicada}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cantidadAplicada}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idInventarioVacuna.idInventarioVacuna}" filterBy="#{item.idInventarioVacuna.idInventarioVacuna}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTbAplicacionDosisTitle_idInventarioVacuna}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idInventarioVacuna.idInventarioVacuna}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cui.cui}" filterBy="#{item.cui.cui}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTbAplicacionDosisTitle_cui}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cui.cui}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{tbAplicacionDosisController.prepareCreate}" update=":TbAplicacionDosisCreateForm" oncomplete="PF('TbAplicacionDosisCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":TbAplicacionDosisViewForm" oncomplete="PF('TbAplicacionDosisViewDialog').show()" disabled="#{empty tbAplicacionDosisController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TbAplicacionDosisEditForm" oncomplete="PF('TbAplicacionDosisEditDialog').show()" disabled="#{empty tbAplicacionDosisController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tbAplicacionDosisController.delete}" update=":growl,datalist" disabled="#{empty tbAplicacionDosisController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

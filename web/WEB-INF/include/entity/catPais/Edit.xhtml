@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CatPaisEditDlg" widgetVar="CatPaisEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCatPaisTitle}" closeOnEscape="true">
+
+            <h:form id="CatPaisEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{catPaisController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCatPaisLabel_idPais}" for="idPais" />
+                        <h:outputText id="idPais" value="#{catPaisController.selected.idPais}" />
+
+                        <p:outputLabel value="#{myBundle.EditCatPaisLabel_nombrePais}" for="nombrePais" />
+                        <p:inputText id="nombrePais" value="#{catPaisController.selected.nombrePais}" title="#{myBundle.EditCatPaisTitle_nombrePais}" size="45" maxlength="45"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{catPaisController.save}" value="#{myBundle.Save}" update="display,:CatPaisListForm:datalist,:CatPaisListForm:CatPaisDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CatPaisEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CatPaisEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

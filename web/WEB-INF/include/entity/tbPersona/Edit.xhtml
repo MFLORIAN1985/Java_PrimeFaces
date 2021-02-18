@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TbPersonaEditDlg" widgetVar="TbPersonaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditTbPersonaTitle}" closeOnEscape="true">
+
+            <h:form id="TbPersonaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{tbPersonaController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditTbPersonaLabel_cui}" for="cui" />
+                        <h:outputText id="cui" value="#{tbPersonaController.selected.cui}" />
+
+                        <p:outputLabel value="#{myBundle.EditTbPersonaLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{tbPersonaController.selected.nombre}" title="#{myBundle.EditTbPersonaTitle_nombre}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.EditTbPersonaLabel_fechaNacimiento}" for="fechaNacimiento" />
+                        <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{tbPersonaController.selected.fechaNacimiento}" title="#{myBundle.EditTbPersonaTitle_fechaNacimiento}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditTbPersonaLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{tbPersonaController.selected.direccion}" title="#{myBundle.EditTbPersonaTitle_direccion}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.EditTbPersonaLabel_telefonoMovil}" for="telefonoMovil" />
+                        <p:inputText id="telefonoMovil" value="#{tbPersonaController.selected.telefonoMovil}" title="#{myBundle.EditTbPersonaTitle_telefonoMovil}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.EditTbPersonaLabel_telefonoCasa}" for="telefonoCasa" />
+                        <p:inputText id="telefonoCasa" value="#{tbPersonaController.selected.telefonoCasa}" title="#{myBundle.EditTbPersonaTitle_telefonoCasa}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.EditTbPersonaLabel_nombreEncargado}" for="nombreEncargado" />
+                        <p:inputText id="nombreEncargado" value="#{tbPersonaController.selected.nombreEncargado}" title="#{myBundle.EditTbPersonaTitle_nombreEncargado}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.EditTbPersonaLabel_cuiEncargado}" for="cuiEncargado" />
+                        <p:inputText id="cuiEncargado" value="#{tbPersonaController.selected.cuiEncargado}" title="#{myBundle.EditTbPersonaTitle_cuiEncargado}" size="13" maxlength="13"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tbPersonaController.save}" value="#{myBundle.Save}" update="display,:TbPersonaListForm:datalist,:TbPersonaListForm:TbPersonaDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TbPersonaEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TbPersonaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

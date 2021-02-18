@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CatTipoVacunaCreateDlg" widgetVar="CatTipoVacunaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateCatTipoVacunaTitle}" closeOnEscape="true">
+
+            <h:form id="CatTipoVacunaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{catTipoVacunaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateCatTipoVacunaLabel_idTipoVacuna}" for="idTipoVacuna" />
+                        <p:inputText id="idTipoVacuna" value="#{catTipoVacunaController.selected.idTipoVacuna}" title="#{myBundle.CreateCatTipoVacunaTitle_idTipoVacuna}" required="true" requiredMessage="#{myBundle.CreateCatTipoVacunaRequiredMessage_idTipoVacuna}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCatTipoVacunaLabel_nombreVacuna}" for="nombreVacuna" />
+                        <p:inputText id="nombreVacuna" value="#{catTipoVacunaController.selected.nombreVacuna}" title="#{myBundle.CreateCatTipoVacunaTitle_nombreVacuna}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCatTipoVacunaLabel_efectosAdversos}" for="efectosAdversos" />
+                        <p:inputText id="efectosAdversos" value="#{catTipoVacunaController.selected.efectosAdversos}" title="#{myBundle.CreateCatTipoVacunaTitle_efectosAdversos}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCatTipoVacunaLabel_modoAlmacen}" for="modoAlmacen" />
+                        <p:inputText id="modoAlmacen" value="#{catTipoVacunaController.selected.modoAlmacen}" title="#{myBundle.CreateCatTipoVacunaTitle_modoAlmacen}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCatTipoVacunaLabel_cantidadAplicaciones}" for="cantidadAplicaciones" />
+                        <p:inputText id="cantidadAplicaciones" value="#{catTipoVacunaController.selected.cantidadAplicaciones}" title="#{myBundle.CreateCatTipoVacunaTitle_cantidadAplicaciones}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCatTipoVacunaLabel_idLaboratorio}" for="idLaboratorio" />
+                        <p:selectOneMenu id="idLaboratorio" value="#{catTipoVacunaController.selected.idLaboratorio}"  converter="catLaboratorioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{catLaboratorioController.items}"
+                                           var="idLaboratorioItem"
+                                           itemValue="#{idLaboratorioItem}"
+                                           itemLabel="#{idLaboratorioItem.idLaboratorio.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{catTipoVacunaController.saveNew}" value="#{myBundle.Save}" update="display,:CatTipoVacunaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CatTipoVacunaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CatTipoVacunaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

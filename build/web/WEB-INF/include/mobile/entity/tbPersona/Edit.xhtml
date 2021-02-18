@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TbPersonaEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditTbPersonaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TbPersonaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TbPersonaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{tbPersonaController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditTbPersonaLabel_cui}" for="cui" />
+                            <h:outputText id="cui" value="#{tbPersonaController.selected.cui}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTbPersonaLabel_nombre}" for="nombre" />
+                            <p:inputText id="nombre" value="#{tbPersonaController.selected.nombre}" title="#{myBundle.EditTbPersonaTitle_nombre}" size="100" maxlength="100"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTbPersonaLabel_fechaNacimiento}" for="fechaNacimiento" />
+                            <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{tbPersonaController.selected.fechaNacimiento}" title="#{myBundle.EditTbPersonaTitle_fechaNacimiento}"  showOn="button"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTbPersonaLabel_direccion}" for="direccion" />
+                            <p:inputText id="direccion" value="#{tbPersonaController.selected.direccion}" title="#{myBundle.EditTbPersonaTitle_direccion}" size="100" maxlength="100"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTbPersonaLabel_telefonoMovil}" for="telefonoMovil" />
+                            <p:inputText id="telefonoMovil" value="#{tbPersonaController.selected.telefonoMovil}" title="#{myBundle.EditTbPersonaTitle_telefonoMovil}" size="20" maxlength="20"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTbPersonaLabel_telefonoCasa}" for="telefonoCasa" />
+                            <p:inputText id="telefonoCasa" value="#{tbPersonaController.selected.telefonoCasa}" title="#{myBundle.EditTbPersonaTitle_telefonoCasa}" size="20" maxlength="20"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTbPersonaLabel_nombreEncargado}" for="nombreEncargado" />
+                            <p:inputText id="nombreEncargado" value="#{tbPersonaController.selected.nombreEncargado}" title="#{myBundle.EditTbPersonaTitle_nombreEncargado}" size="100" maxlength="100"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTbPersonaLabel_cuiEncargado}" for="cuiEncargado" />
+                            <p:inputText id="cuiEncargado" value="#{tbPersonaController.selected.cuiEncargado}" title="#{myBundle.EditTbPersonaTitle_cuiEncargado}" size="13" maxlength="13"/>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{tbPersonaController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:TbPersonaListPage:TbPersonaListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:TbPersonaListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

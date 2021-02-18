@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TbPersonaCreateDlg" widgetVar="TbPersonaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateTbPersonaTitle}" closeOnEscape="true">
+
+            <h:form id="TbPersonaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{tbPersonaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateTbPersonaLabel_cui}" for="cui" />
+                        <p:inputText id="cui" value="#{tbPersonaController.selected.cui}" title="#{myBundle.CreateTbPersonaTitle_cui}" required="true" requiredMessage="#{myBundle.CreateTbPersonaRequiredMessage_cui}" size="13" maxlength="13"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTbPersonaLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{tbPersonaController.selected.nombre}" title="#{myBundle.CreateTbPersonaTitle_nombre}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTbPersonaLabel_fechaNacimiento}" for="fechaNacimiento" />
+                        <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{tbPersonaController.selected.fechaNacimiento}" title="#{myBundle.CreateTbPersonaTitle_fechaNacimiento}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTbPersonaLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{tbPersonaController.selected.direccion}" title="#{myBundle.CreateTbPersonaTitle_direccion}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTbPersonaLabel_telefonoMovil}" for="telefonoMovil" />
+                        <p:inputText id="telefonoMovil" value="#{tbPersonaController.selected.telefonoMovil}" title="#{myBundle.CreateTbPersonaTitle_telefonoMovil}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTbPersonaLabel_telefonoCasa}" for="telefonoCasa" />
+                        <p:inputText id="telefonoCasa" value="#{tbPersonaController.selected.telefonoCasa}" title="#{myBundle.CreateTbPersonaTitle_telefonoCasa}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTbPersonaLabel_nombreEncargado}" for="nombreEncargado" />
+                        <p:inputText id="nombreEncargado" value="#{tbPersonaController.selected.nombreEncargado}" title="#{myBundle.CreateTbPersonaTitle_nombreEncargado}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTbPersonaLabel_cuiEncargado}" for="cuiEncargado" />
+                        <p:inputText id="cuiEncargado" value="#{tbPersonaController.selected.cuiEncargado}" title="#{myBundle.CreateTbPersonaTitle_cuiEncargado}" size="13" maxlength="13"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tbPersonaController.saveNew}" value="#{myBundle.Save}" update="display,:TbPersonaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TbPersonaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TbPersonaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

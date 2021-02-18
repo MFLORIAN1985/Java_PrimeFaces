@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TbInventarioVacunasViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewTbInventarioVacunasTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TbInventarioVacunasListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TbInventarioVacunasViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{tbInventarioVacunasController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTbInventarioVacunasLabel_idInventarioVacuna}"/>
+                            <h:outputText value="#{tbInventarioVacunasController.selected.idInventarioVacuna}" title="#{myBundle.ViewTbInventarioVacunasTitle_idInventarioVacuna}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTbInventarioVacunasLabel_fechaCompra}"/>
+                            <h:outputText value="#{tbInventarioVacunasController.selected.fechaCompra}" title="#{myBundle.ViewTbInventarioVacunasTitle_fechaCompra}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTbInventarioVacunasLabel_fechaCaducidad}"/>
+                            <h:outputText value="#{tbInventarioVacunasController.selected.fechaCaducidad}" title="#{myBundle.ViewTbInventarioVacunasTitle_fechaCaducidad}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTbInventarioVacunasLabel_numeroLote}"/>
+                            <h:outputText value="#{tbInventarioVacunasController.selected.numeroLote}" title="#{myBundle.ViewTbInventarioVacunasTitle_numeroLote}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTbInventarioVacunasLabel_precioLote}"/>
+                            <h:outputText value="#{tbInventarioVacunasController.selected.precioLote}" title="#{myBundle.ViewTbInventarioVacunasTitle_precioLote}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTbInventarioVacunasLabel_cantidadLote}"/>
+                            <h:outputText value="#{tbInventarioVacunasController.selected.cantidadLote}" title="#{myBundle.ViewTbInventarioVacunasTitle_cantidadLote}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTbInventarioVacunasLabel_idTipoVacuna}"/>
+                            <h:outputText value="#{tbInventarioVacunasController.selected.idTipoVacuna.idTipoVacuna}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTbInventarioVacunasLabel_idLaboratorio}"/>
+                            <h:outputText value="#{tbInventarioVacunasController.selected.idLaboratorio.idLaboratorio}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CatTipoVacunaViewDlg" widgetVar="CatTipoVacunaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewCatTipoVacunaTitle}" closeOnEscape="true">
+
+            <h:form id="CatTipoVacunaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{catTipoVacunaController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewCatTipoVacunaLabel_idTipoVacuna}"/>
+                        <h:outputText value="#{catTipoVacunaController.selected.idTipoVacuna}" title="#{myBundle.ViewCatTipoVacunaTitle_idTipoVacuna}"/>
+
+                        <h:outputText value="#{myBundle.ViewCatTipoVacunaLabel_nombreVacuna}"/>
+                        <h:outputText value="#{catTipoVacunaController.selected.nombreVacuna}" title="#{myBundle.ViewCatTipoVacunaTitle_nombreVacuna}"/>
+
+                        <h:outputText value="#{myBundle.ViewCatTipoVacunaLabel_efectosAdversos}"/>
+                        <h:outputText value="#{catTipoVacunaController.selected.efectosAdversos}" title="#{myBundle.ViewCatTipoVacunaTitle_efectosAdversos}"/>
+
+                        <h:outputText value="#{myBundle.ViewCatTipoVacunaLabel_modoAlmacen}"/>
+                        <h:outputText value="#{catTipoVacunaController.selected.modoAlmacen}" title="#{myBundle.ViewCatTipoVacunaTitle_modoAlmacen}"/>
+
+                        <h:outputText value="#{myBundle.ViewCatTipoVacunaLabel_cantidadAplicaciones}"/>
+                        <h:outputText value="#{catTipoVacunaController.selected.cantidadAplicaciones}" title="#{myBundle.ViewCatTipoVacunaTitle_cantidadAplicaciones}"/>
+
+                        <h:outputText value="#{myBundle.ViewCatTipoVacunaLabel_idLaboratorio}"/>
+                        <h:outputText value="#{catTipoVacunaController.selected.idLaboratorio.idLaboratorio}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('CatTipoVacunaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

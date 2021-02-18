@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TbAplicacionDosisViewDlg" widgetVar="TbAplicacionDosisViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewTbAplicacionDosisTitle}" closeOnEscape="true">
+
+            <h:form id="TbAplicacionDosisViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{tbAplicacionDosisController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewTbAplicacionDosisLabel_idAplicacion}"/>
+                        <h:outputText value="#{tbAplicacionDosisController.selected.idAplicacion}" title="#{myBundle.ViewTbAplicacionDosisTitle_idAplicacion}"/>
+
+                        <h:outputText value="#{myBundle.ViewTbAplicacionDosisLabel_fechaAplicacion}"/>
+                        <h:outputText value="#{tbAplicacionDosisController.selected.fechaAplicacion}" title="#{myBundle.ViewTbAplicacionDosisTitle_fechaAplicacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewTbAplicacionDosisLabel_cantidadAplicada}"/>
+                        <h:outputText value="#{tbAplicacionDosisController.selected.cantidadAplicada}" title="#{myBundle.ViewTbAplicacionDosisTitle_cantidadAplicada}"/>
+
+                        <h:outputText value="#{myBundle.ViewTbAplicacionDosisLabel_idInventarioVacuna}"/>
+                        <h:outputText value="#{tbAplicacionDosisController.selected.idInventarioVacuna.idInventarioVacuna}"/>
+
+                        <h:outputText value="#{myBundle.ViewTbAplicacionDosisLabel_cui}"/>
+                        <h:outputText value="#{tbAplicacionDosisController.selected.cui.cui}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('TbAplicacionDosisViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

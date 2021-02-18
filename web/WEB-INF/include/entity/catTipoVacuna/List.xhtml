@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CatTipoVacunaListForm">
+
+        <p:panel header="#{myBundle.ListCatTipoVacunaTitle}">
+            <p:contextMenu id="CatTipoVacunaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('CatTipoVacunaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('CatTipoVacunaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('CatTipoVacunaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CatTipoVacunaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.CatTipoVacunaMenuItem_idLaboratorio}" icon="ui-icon-search"  actionListener="#{catTipoVacunaController.prepareIdLaboratorio}" update=":CatLaboratorioViewForm" oncomplete="PF('CatLaboratorioViewDialog').show()" disabled="#{empty catTipoVacunaController.selected.idLaboratorio}"/>  
+                <p:menuitem value="#{myBundle.CatTipoVacunaMenuItem_tbInventarioVacunasCollection}" icon="ui-icon-search"  action="#{catTipoVacunaController.navigateTbInventarioVacunasCollection}" disabled="#{catTipoVacunaController.isTbInventarioVacunasCollectionEmpty}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{catTipoVacunaController.items}"
+                         lazy="false"
+                         rowKey="#{item.idTipoVacuna}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{catTipoVacunaController.selected}"
+                         filteredValue="#{catTipoVacunaController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{catTipoVacunaController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idTipoVacuna}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CatTipoVacunaDataTableContextMenu" listener="#{catTipoVacunaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CatTipoVacunaDataTableContextMenu" listener="#{catTipoVacunaController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{catTipoVacunaController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CatTipoVacunaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idTipoVacuna}" filterBy="#{item.idTipoVacuna}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCatTipoVacunaTitle_idTipoVacuna}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idTipoVacuna}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombreVacuna}" filterBy="#{item.nombreVacuna}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCatTipoVacunaTitle_nombreVacuna}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombreVacuna}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.efectosAdversos}" filterBy="#{item.efectosAdversos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCatTipoVacunaTitle_efectosAdversos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.efectosAdversos}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.modoAlmacen}" filterBy="#{item.modoAlmacen}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCatTipoVacunaTitle_modoAlmacen}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.modoAlmacen}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cantidadAplicaciones}" filterBy="#{item.cantidadAplicaciones}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCatTipoVacunaTitle_cantidadAplicaciones}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cantidadAplicaciones}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idLaboratorio.idLaboratorio}" filterBy="#{item.idLaboratorio.idLaboratorio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCatTipoVacunaTitle_idLaboratorio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idLaboratorio.idLaboratorio}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{catTipoVacunaController.prepareCreate}" update=":CatTipoVacunaCreateForm" oncomplete="PF('CatTipoVacunaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":CatTipoVacunaViewForm" oncomplete="PF('CatTipoVacunaViewDialog').show()" disabled="#{empty catTipoVacunaController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CatTipoVacunaEditForm" oncomplete="PF('CatTipoVacunaEditDialog').show()" disabled="#{empty catTipoVacunaController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{catTipoVacunaController.delete}" update=":growl,datalist" disabled="#{empty catTipoVacunaController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>
